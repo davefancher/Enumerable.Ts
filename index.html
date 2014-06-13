@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="Enumerable.js"></script>
+</head>
+<body>
+    <h1>TypeScript HTML App</h1>
+
+    <div id="content"></div>
+
+    <script language="javascript" type="text/javascript">
+        var writeLabel = function (target, text) {
+            target.innerHTML += "<strong>" + text + "</strong><br />";
+        }
+
+        var writeSequence = function (target, seq) {
+            target.innerHTML += "[ ";
+            seq.forEach(function (item, ix) { target.innerHTML += item + " " });
+            target.innerHTML += " ]<br />";
+        }
+
+        var writeItem = function (target, item) {
+            target.innerHTML += item.toString() + "<br />";
+        }
+
+        window.onload = function () {
+            var content = document.getElementById("content");
+
+            writeLabel(content, "Init");
+            writeSequence(content, EnumerableModule.Enumerable.init(10));
+            
+            var sequence = new EnumerableModule.Enumerable([2, 4, 4, 4, 5, 5, 7, 9]);
+
+            writeLabel(content, "Items");
+            writeSequence(content, sequence)
+
+            writeLabel(content, "Squares");
+            writeSequence(content, sequence.map(function (item, ix) { return item * item; }));
+
+            writeLabel(content, "Minimum");
+            writeItem(content, sequence.minBy(function (item) { return item; }));
+
+            writeLabel(content, "Maximum");
+            writeItem(content, sequence.maxBy(function (item) { return item; }));
+
+            writeLabel(content, "Sum");
+            writeItem(content, sequence.sumBy(function (item) { return item; }));
+
+            writeLabel(content, "Average");
+            writeItem(content, sequence.averageBy(function (item) { return item; }));
+
+            writeLabel(content, "Distinct");
+            writeSequence(content, sequence.distinctBy(function (item) { return item; }));
+
+            writeLabel(content, "Filtered");
+            writeSequence(content, sequence.filterBy(function (item) { return item === 4; }));
+
+            writeLabel(content, "First");
+            writeItem(content, sequence.firstBy(function (item) { return item === 7; }));
+
+            writeLabel(content, "Last");
+            writeItem(content, sequence.lastBy(function (item) { return item === 7; }));
+
+            writeLabel(content, "Head");
+            writeItem(content, sequence.head());
+
+            writeLabel(content, "Tail");
+            writeSequence(content, sequence.tail());
+
+            writeLabel(content, "Contains (7)");
+            writeItem(content, sequence.containsBy(function (item) { return item === 7; }));
+
+            writeLabel(content, "Contains (27)");
+            writeItem(content, sequence.containsBy(function (item) { return item === 27; }));
+
+            writeLabel(content, "All");
+            writeItem(content, sequence.allBy(function (item) { return item === 4; }));
+
+            writeLabel(content, "Any");
+            writeItem(content, sequence.anyBy(function (item) { return item === 4; }));
+        }
+    </script>
+</body>
+</html>
